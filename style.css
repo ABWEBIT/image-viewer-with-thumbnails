@@ -1,4 +1,4 @@
-﻿/* remove webkit object highlight */
+/* remove webkit object highlight */
 *{
   outline:none;
   -webkit-tap-highlight-color:rgba(0,0,0,0);
@@ -73,7 +73,7 @@ body{
 .vItm img{
   position:absolute;
   opacity:0;
-  transition-duration:1s;
+  transition-duration:0.5s;
   pointer-events:none;
   border-radius:5px;
   max-width:100%;
