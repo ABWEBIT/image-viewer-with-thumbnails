@@ -132,6 +132,7 @@ body{
 .next .button{right:5px;}
 
 .button{
+  opacity:0.5;
   position:absolute;
   display:block;
   pointer-events:none;
@@ -140,8 +141,8 @@ body{
   background-color:rgba(0,0,0,0.1);
   top:50%;
   transform:translateY(-50%);
-  width:40px;
-  height:40px;}
+  width:30px;
+  height:30px;}
 
 .icon{
   position:absolute;
@@ -149,10 +150,10 @@ body{
   left:50%;
   transform:translate3d(-50%,-50%,0);
   stroke-linecap:round;
-  stroke-width:4;
+  stroke-width:2;
   stroke:rgb(255,255,255);
-  width:12px;
-  height:24px;}
+  width:8px;
+  height:16px;}
 
 .full{
   position:absolute;
@@ -160,12 +161,12 @@ body{
   cursor:pointer;
   transition:all 0.25s;
   right:5px;
-  width:40px;
-  height:40px;}
+  width:30px;
+  height:30px;}
 
 .full .icon{
-  stroke-width:6;
-  width:24px;}
+  stroke-width:4;
+  width:16px;}
 
 @media (hover: hover){
   .full{top:-50px;}
