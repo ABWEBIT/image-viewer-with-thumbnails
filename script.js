@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 let galleries = document.getElementsByClassName('gallery');
 
 for(let gallery of galleries){
@@ -9,9 +9,7 @@ for(let gallery of galleries){
   error = `<span>ошибка</span>`;
 
   viewer = gallery.getElementsByClassName('viewer');
-  for(let item of viewer){
-    item.insertAdjacentHTML('afterbegin',loader);
-  }
+  for(let item of viewer){item.insertAdjacentHTML('afterbegin',loader);}
   thumbs = gallery.querySelector('.thumbs');
 
 // viewer height
@@ -85,9 +83,7 @@ for(let gallery of galleries){
 
 // fullscreen
   let full,fullscreen;
-
   fullscreen = gallery.querySelector('.fullscreen');
-
   let cloneCounter = counter[0].cloneNode(true);
   fullscreen.appendChild(cloneCounter);
   let cloneViewer = viewer[0].cloneNode(true);
@@ -151,45 +147,35 @@ for(let gallery of galleries){
         img.addEventListener('load',()=>loadImg(),{once:true});
       };
 
-        function loadImg(){
-          for(let item of viewer){
-            vItm = item.getElementsByClassName('vItm');
-            let img = vItm[index].querySelector('img');
-            let w = img.naturalWidth;
-            let h = img.naturalHeight;
-            if(w > 0 && h > 0){
-              vItm[index].dataset.state = 'loaded';
-              img.style.transitionProperty = 'opacity';
-            };
-          };
-        };
-      };
-
-      if(vItm[index].dataset.state === 'error'){
-        vItm[index].insertAdjacentHTML('afterbegin',error);
-      };
-
-      function selector(){
+      function loadImg(){
         for(let item of viewer){
           vItm = item.getElementsByClassName('vItm');
-  
-          vItm[index].dataset.current = 1;
-
-          if(index !== pIndex){
-            vItm[pIndex].dataset.current = 0;
+          let img = vItm[index].querySelector('img');
+          let w = img.naturalWidth;
+          let h = img.naturalHeight;
+          if(w > 0 && h > 0){
+            vItm[index].dataset.state = 'loaded';
+            img.style.transitionProperty = 'opacity';
           };
         };
-        tItm[index].insertAdjacentHTML('beforeend',frame);
-        if(index !== pIndex){
-          tItm[pIndex].querySelector('.frame').remove();
-          pIndex = index;
-        };
       };
+     };
 
-      if(nav === 'prev' || nav === 'next' || nav === 'thumbs'){
-        selector();
+    if(vItm[index].dataset.state === 'error') vItm[index].insertAdjacentHTML('afterbegin',error);
+    function selector(){
+      for(let item of viewer){
+        vItm = item.getElementsByClassName('vItm');
+        vItm[index].dataset.current = 1;
+        if(index !== pIndex) vItm[pIndex].dataset.current = 0;
       };
+      tItm[index].insertAdjacentHTML('beforeend',frame);
+      if(index !== pIndex){
+        tItm[pIndex].querySelector('.frame').remove();
+        pIndex = index;
+      };
+    };
 
+    if(nav === 'prev' || nav === 'next' || nav === 'thumbs') selector();
   };
   action()
 };
