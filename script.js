@@ -166,11 +166,8 @@ function checkKey(e){
         vItm = item.getElementsByClassName('vItm');
         let img = vItm[index].querySelector('img');
         img.src = img.dataset.src;
-        img.addEventListener('load',()=>loadImg(),{once:true});
-      };
-
-      function loadImg(){
-        for(let item of viewer){
+        img.addEventListener('load',()=>loadImg());
+        function loadImg(){
           vItm = item.getElementsByClassName('vItm');
           let img = vItm[index].querySelector('img');
           let w = img.naturalWidth;
