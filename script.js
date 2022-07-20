@@ -142,6 +142,9 @@ function checkKey(e){
       action();
     };
   }
+  else if(e.keyCode == '27'){
+    fullscreen.classList.remove('on');
+  }
 }
 
 // action
@@ -150,7 +153,7 @@ function checkKey(e){
     for(let item of counter){
       item.innerHTML = (index + 1)+' / '+vItm.length;
     };
-    // arrows nav
+    // nav
     for(let item of prev){
       index === 0 ? item.classList.remove('on') : item.classList.add('on');
     };
