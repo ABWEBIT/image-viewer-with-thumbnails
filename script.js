@@ -125,6 +125,25 @@ for(let gallery of galleries){
     });
   };
 
+window.addEventListener('keyup',(e)=>checkKey(e));
+
+function checkKey(e){
+  if(e.keyCode == '37'){
+    if(index > 0 && index < vItm.length){
+      nav = 'prev';
+      index--;
+      action();
+    };
+  }
+  else if (e.keyCode == '39'){
+    if(index >= 0 && index < vItm.length - 1){
+      nav = 'next';
+      index++;
+      action();
+    };
+  }
+}
+
 // action
   function action(){
     // counter
