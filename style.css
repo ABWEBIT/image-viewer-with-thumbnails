@@ -89,7 +89,7 @@ body{
   pointer-events:none;
   text-align:center;
   border-radius:5px;
-  background-color:rgba(255,255,255,0.1);
+  background-color:rgba(0,0,0,0.1);
   color:rgb(255,255,255);
   display:block;
   min-width:60px;
@@ -128,8 +128,8 @@ body{
 .prev.on,
 .next.on{display:block;}
 
-.prev .button{left:-50px;}
-.next .button{right:-50px;}
+.prev .button{left:5px;}
+.next .button{right:5px;}
 
 .button{
   position:absolute;
@@ -137,7 +137,7 @@ body{
   pointer-events:none;
   transition:all 0.25s;
   border-radius:5px;
-  background-color:rgba(0,0,0,0.25);
+  background-color:rgba(0,0,0,0.1);
   top:50%;
   transform:translateY(-50%);
   width:40px;
@@ -159,7 +159,6 @@ body{
   display:block;
   cursor:pointer;
   transition:all 0.25s;
-  top:-50px;
   right:5px;
   width:40px;
   height:40px;}
@@ -169,12 +168,17 @@ body{
   width:24px;}
 
 @media (hover: hover){
-  .nav:hover .full{top:5px;}
+  .full{top:-50px;}
+  .nav:hover .full{top:0;}
+  
+  .prev .button{left:-50px;}
+  .next .button{right:-50px;}
+
   .nav:hover .prev .button{left:5px;}
   .nav:hover .next .button{right:5px;}
   .prev:hover .button,
   .next:hover .button,
-  .full:hover .button{background-color:rgba(0,0,0,1);}
+  .full:hover .button{background-color:rgba(0,0,0,0.5);}
 }
 
 /* thumbs */
@@ -186,7 +190,7 @@ body{
   justify-content:center;}
 
 .tItm{
-  background-color:rgba(255,255,255,0.1);
+  background-color:rgba(0,0,0,0.1);
   border-radius:5px;
   position:relative;
   overflow:hidden;
