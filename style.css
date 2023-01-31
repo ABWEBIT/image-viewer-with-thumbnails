@@ -73,7 +73,11 @@ body{
   aspect-ratio:16/9;
   overflow:hidden;
   box-sizing:border-box;
-  width:100%;}
+  width:100%;
+  opacity:0;
+  animation-duration:0.5s;
+  animation-fill-mode:forwards;
+  animation-name:fadeIn;}
 
 .viewer.fullWindow .imagesContainer{
   top:50%;
@@ -85,7 +89,7 @@ body{
 .images{
   opacity:0;
   transition-property:opacity;
-  transition-duration:0.5s;
+  transition-duration:0.25s;
   position:absolute;
   top:0;
   width:100%;
@@ -94,9 +98,6 @@ body{
 .images[data-current='1']{opacity:1;}
 
 .images img{
-  opacity:0;
-  transition-property:opacity;
-  transition-duration:0.5s;
   background-color:transparent;
   position:absolute;
   pointer-events:none;
@@ -106,9 +107,6 @@ body{
   top:50%;
   left:50%;
   transform:translate3d(-50%,-50%,0);}
-
-.images[data-current='0'] img{transition-delay:0.5s;}
-.images[data-current='1'] img{opacity:1;}
 
 /* thumbs */
 .viewer.fullWindow .thumbsView{
@@ -166,11 +164,6 @@ body{
   pointer-events:none;
   height:auto;
   width:100%;}
-
-@keyframes fadeIn{
-  0%{opacity:0;}
-  100%{opacity:1;}
-}
 
 /* svg icons */
 .icon{
@@ -320,4 +313,9 @@ body{
 @keyframes rotate{
   0%{transform:rotate(0deg);}
   100%{transform:rotate(360deg);}
+}
+
+@keyframes fadeIn{
+  0%{opacity:0;}
+  100%{opacity:1;}
 }
