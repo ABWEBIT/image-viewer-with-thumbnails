@@ -56,6 +56,12 @@ class ImageViewer{
 
       if(img.decoding) img.decoding = 'async';
       img.src = img.dataset.src;
+
+      window.addEventListener('load',()=>{
+        if(img.naturalWidth > 0 && img.naturalHeight > 0)
+          this.images[i].querySelector('.loader').remove();
+      });
+
     };
   };
 
