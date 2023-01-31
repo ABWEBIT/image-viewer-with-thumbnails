@@ -151,9 +151,6 @@ class ImageViewer{
     };
     this.images[this.index].dataset.current = 1;
     this.thumbs[this.index].dataset.current = 1;
-
-    let img = this.images[this.index].querySelector('img');
-    img.src = img.dataset.src;
   };
 
 };
