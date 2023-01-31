@@ -120,14 +120,11 @@ class ImageViewer{
     let link = document.createElement('a');
     document.documentElement.append(link);
 
-    let d = new Date();
-    let time = d.getTime();
-
     fetch(url)
       .then(res => res.blob())
       .then(blob =>{
         let objectURL = URL.createObjectURL(blob);
-        link.setAttribute('download','image_'+time);
+        link.setAttribute('download','image_'+(new Date()).getTime());
         link.href = objectURL;
         link.click();})
       .then(()=>link.remove());
