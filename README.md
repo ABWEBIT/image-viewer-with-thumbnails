@@ -1,4 +1,4 @@
-# gallery-with-thumbnails
+# image-viewer-with-thumbnails
 
 https://abwebit.github.io/image-viewer-with-thumbnails/  
 
