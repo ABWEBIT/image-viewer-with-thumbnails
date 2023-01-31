@@ -83,17 +83,22 @@ body{
   max-height:calc(100% - 100px);}
 
 .images{
-  display:none;
+  opacity:0;
+  transition-property:opacity;
+  transition-duration:0.5s;
   position:absolute;
   top:0;
   width:100%;
   height:100%;}
 
-.images[data-current='1']{display:block;}
+.images[data-current='1']{opacity:1;}
 
 .images img{
+  opacity:0;
+  transition-property:opacity;
+  transition-duration:0.5s;
+  background-color:transparent;
   position:absolute;
-  display:none;
   pointer-events:none;
   border-radius:5px;
   max-width:100%;
@@ -102,7 +107,8 @@ body{
   left:50%;
   transform:translate3d(-50%,-50%,0);}
 
-.images[data-current='1'] img{display:block;}
+.images[data-current='0'] img{transition-delay:0.5s;}
+.images[data-current='1'] img{opacity:1;}
 
 /* thumbs */
 .viewer.fullWindow .thumbsView{
@@ -152,6 +158,7 @@ body{
   transform:translate3d(-50%,-50%,0);}
 
 .thumbs img{
+  background-color:transparent;
   opacity:0;
   animation-duration:0.5s;
   animation-fill-mode:forwards;
