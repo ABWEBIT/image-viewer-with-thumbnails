@@ -1,115 +1,133 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
 <link rel="icon" href="data:,">
 <meta name="viewport" content="width=device-width">
-<title>Галерея</title>
+<title>Image Viewer</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <section id="app">
   <div class="wrap">
 
-    <section class="gallery">
+    <section id="newItem" class="viewer">
 
-      <section class="viewer">
-        <div class="vItm">
-          <img data-src="img/001.jpg">
-        </div>
-        <div class="vItm">
-          <img data-src="img/002.jpg">
-        </div>
-        <div class="vItm">
-          <img data-src="img/003.jpg">
-        </div>
-        <div class="vItm">
-          <img data-src="img/004.jpg">
-        </div>
-        <div class="vItm">
-          <img data-src="img/005.jpg">
-        </div>
-        <div class="vItm">
-          <img data-src="img/006.jpg">
-        </div>
-        <div class="vItm">
-          <img data-src="img/007.jpg">
-        </div>
-        <div class="vItm">
-          <img data-src="img/008.jpg">
-        </div>
-        <div class="vItm">
-          <img data-src="img/009.jpg">
-        </div>
-        <div class="vItm">
-          <img data-src="img/010.jpg">
-        </div>
+      <section class="imagesView">
 
-        <section class="nav">
+        <section class="imagesContainer">
+          <div class="images">
+            <img data-src="img/001.jpg">
+          </div>
+          <div class="images">
+            <img data-src="img/002.jpg">
+          </div>
+          <div class="images">
+            <img data-src="img/003.jpg">
+          </div>
+          <div class="images">
+            <img data-src="img/004.jpg">
+          </div>
+          <div class="images">
+            <img data-src="img/005.jpg">
+          </div>
+          <div class="images">
+            <img data-src="img/006.jpg">
+          </div>
+          <div class="images">
+            <img data-src="img/007.jpg">
+          </div>
+          <div class="images">
+            <img data-src="img/008.jpg">
+          </div>
+          <div class="images">
+            <img data-src="img/009.jpg">
+          </div>
+          <div class="images">
+            <img data-src="img/010.jpg">
+          </div>
+        </section>
+
+        <section class="navigation">
           <div class="prev">
-            <div class="button">
-              <svg class="icon">
-                <line x1="15%" y1="50%" x2="85%" y2="15%" />
-                <line x1="15%" y1="50%" x2="85%" y2="85%" />
-              </svg>
-            </div>
+            <svg class="icon" viewBox="0 0 30 30">
+              <polyline points="20,1 5,15 20,29"/>
+            </svg>
           </div>
           <div class="next">
-            <div class="button">
-              <svg class="icon">
-                <line x1="15%" y1="15%" x2="85%" y2="50%" />
-                <line x1="15%" y1="85%" x2="85%" y2="50%" />
-              </svg>
-            </div>
+            <svg class="icon" viewBox="0 0 30 30">
+              <polyline points="10,1 25,15 10,29"/>
+            </svg>
           </div>
-          <div class="full">
-            <div class="button">
-              <svg class="icon">
-                <line x1="75%" y1="0%" x2="100%" y2="0%" />
-                <line x1="100%" y1="0%" x2="100%" y2="25%" />
-                <line x1="0%" y1="100%" x2="25%" y2="100%" />
-                <line x1="0%" y1="100%" x2="0%" y2="75%" />
-              </svg>
+        </section>
+
+        <section class="helper">
+          <div class="helperLeft">
+            <div class="counter">&nbsp;</div>
+          </div>
+          <div class="helperRight">
+            <div class="button download">
+              <div class="svg">
+                <svg class="icon" viewBox="0 0 30 30">
+                  <path d="M8,14 15,20 22,14 M15,4 15,14 M5,22 5,26 25,26 25,22"/>
+                </svg>
+              </div>
+              <div class="text">Скачать</div>
+            </div>
+            <div class="button fullWindowOpen">
+              <div class="svg">
+                <svg class="icon" viewBox="0 0 30 30">
+                  <path d="M3,10 3,4 10,4 M20,4 27,4 27,10 M27,20 27,26 20,26 M10,26 3,26 3,20"/>
+                </svg>
+              </div>
+              <div class="text">Развернуть</div>
+            </div>
+            <div class="button fullWindowClose">
+              <div class="svg">
+                <svg class="icon" viewBox="0 0 30 30">
+                  <path d="M3,10 10,10 10,4 M20,4 20,10 27,10 M27,20 20,20 20,26 M10,26 10,20 3,20"/>
+                </svg>
+              </div>
+              <div class="text">Свернуть</div>
             </div>
           </div>
         </section>
-      </section>
-      
-      <section class="counter">&nbsp;</section>
 
-      <section class="thumbs">
-        <div class="tItm">
+      </section>
+
+      <section class="thumbsView">
+        <div class="thumbs">
           <img src="img/thumbs/001.jpg">
         </div>
-        <div class="tItm">
+        <div class="thumbs">
           <img src="img/thumbs/002.jpg">
         </div>
-        <div class="tItm">
+        <div class="thumbs">
           <img src="img/thumbs/003.jpg">
         </div>
-        <div class="tItm">
+        <div class="thumbs">
           <img src="img/thumbs/004.jpg">
         </div>
-        <div class="tItm">
+        <div class="thumbs">
           <img src="img/thumbs/005.jpg">
         </div>
-        <div class="tItm">
+        <div class="thumbs">
           <img src="img/thumbs/006.jpg">
         </div>
-        <div class="tItm">
+        <div class="thumbs">
           <img src="img/thumbs/007.jpg">
         </div>
-        <div class="tItm">
+        <div class="thumbs">
           <img src="img/thumbs/008.jpg">
         </div>
-        <div class="tItm">
+        <div class="thumbs">
           <img src="img/thumbs/009.jpg">
         </div>
-        <div class="tItm">
+        <div class="thumbs">
           <img src="img/thumbs/010.jpg">
         </div>
       </section>
-      <section class="fullscreen"></section>
+
     </section>
 
   </div>
