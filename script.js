@@ -1,200 +1,156 @@
 'use strict';
-let galleries = document.getElementsByClassName('gallery');
+class ImageViewer{
+  constructor(id){
+    this.element = document.getElementById(id);
+    this.imagesContainer = this.element.querySelector('.imagesContainer');
+    this.images = null;
+    this.thumbsView = this.element.querySelector('.thumbsView');
+    this.thumbs = null;
+    this.counter = this.element.querySelector('.counter');
+    this.navigation = this.element.querySelector('.navigation');
+    this.prev = this.navigation.querySelector('.prev');
+    this.next = this.navigation.querySelector('.next');
+    this.prev.addEventListener('click',()=>this._prev());
+    this.next.addEventListener('click',()=>this._next());
+    this.helper = this.element.querySelector('.helper');
+    this.download = this.helper.querySelector('.download');
+    this.download.addEventListener('click',()=>this._download());
 
-for(let gallery of galleries){
-  let counter,frame,loader,error,viewer,thumbs,nav,prev,next,vItm,tItm,index=0,pIndex=0;
-  counter = gallery.getElementsByClassName('counter');
-  frame = `<div class="frame"></div>`;
-  loader = `<div class="loader"></div>`;
-  error = `<span>ошибка</span>`;
+    this.fullWindowOpen = this.helper.querySelector('.fullWindowOpen');
+    this.fullWindowOpen.addEventListener('click',()=>this._fullWindowOpen());
 
-  viewer = gallery.getElementsByClassName('viewer');
-  for(let item of viewer){item.insertAdjacentHTML('afterbegin',loader);}
-  thumbs = gallery.querySelector('.thumbs');
+    this.fullWindowClose = this.helper.querySelector('.fullWindowClose');
+    this.fullWindowClose.addEventListener('click',()=>this._fullWindowClose());
 
-// viewer height
-  let viewerHeight=()=>viewer[0].style.height = Math.round(viewer.offsetWidth * 0.5625)+'px';
-  window.addEventListener('resize',viewerHeight);
+    this.index = 0;
+    window.addEventListener('keyup',(e)=>this._keyboard(e));
+    this.loader = `<div class="loader"></div>`;
+    this._init();
+  };
+  
+  _init(){
+    this.images = this.imagesContainer.querySelectorAll('.images');
+    if(this.images.length < 1)
+      throw new Error('изображения отсутствуют');
 
-// viewer
-  for(let item of viewer){
-    vItm = item.getElementsByClassName('vItm');
-    if(vItm.length < 1) throw new Error('изображения отсутствуют');
+    this.thumbs = this.thumbsView.querySelectorAll('.thumbs');
+    if(this.thumbs.length < 1)
+      throw new Error('миниатюры отсутствуют');
 
-    for(let i = 0; i < vItm.length; i++){
-      i === 0 ? vItm[i].dataset.current = 1 : vItm[i].dataset.current = 0;
-      let img = vItm[i].querySelector('img');
+    if(this.images.length !== this.thumbs.length)
+      throw new Error('кол-во изображений и миниатюр не совпадает');
 
-      function vError(){
-        vItm[i].dataset.state = 'error';
-        vItm[i].insertAdjacentHTML('afterbegin',error);
-      };
+    this._images();
+    this._thumbs();
+    this._counter();
+  };
 
-      if(img === null) vError()
-      else if(img.dataset.src === '') vError()
-      else{
-        img.addEventListener('error',()=>{
-          vError()
-        },{once:true});
-      };
+  _images(){
+    for(let item of this.images){
+      item.insertAdjacentHTML('afterbegin',this.loader);
+    };
 
-      if(img !== null  && img.dataset.src !== ''){
-        vItm[i].dataset.state = 'ready';
-        if(img.decoding) img.decoding = 'async';
-      };
+    for(let i = 0; i < this.images.length; i++){
+      i === 0 ? this.images[i].dataset.current = 1 : this.images[i].dataset.current = 0;
+      let img = this.images[i].querySelector('img');
+
+      if(img.decoding) img.decoding = 'async';
+      img.src = img.dataset.src;
     };
   };
 
-// thumbs
-  tItm = thumbs.getElementsByClassName('tItm');
-  if(tItm.length < 1) throw new Error('миниатюры отсутствуют');
-  tItm[index].insertAdjacentHTML('beforeend',frame);
-
-  for(let i = 0;i < tItm.length; i++){
-    tItm[i].dataset.nav = 'thumbs';
-    let img = tItm[i].querySelector('img');
-
-    if(img === null){
-      tItm[i].insertAdjacentHTML('afterbegin',error)
-    }
-    else if(!img.getAttribute('src')){
-      tItm[i].insertAdjacentHTML('afterbegin',error);
+  _thumbs(){
+    for(let item of this.thumbs){
+      item.insertAdjacentHTML('afterbegin',this.loader);
     };
 
-    if(img !== null && img.getAttribute('src')){
+    for(let i = 0; i < this.thumbs.length; i++){
+      i === 0 ? this.thumbs[i].dataset.current = 1 : this.thumbs[i].dataset.current = 0;
+      let img = this.thumbs[i].querySelector('img');
+
       if(img.decoding) img.decoding = 'async';
-      tItm[i].insertAdjacentHTML('afterbegin',loader);
-      let time = Math.round(1000*Math.random());
 
       setTimeout(()=>{
-        tItm[i].querySelector('.loader').remove();
+        this.thumbs[i].querySelector('.loader').remove();
         img.style.animationName = 'fadeIn';
-      },time);
-    };
+      },Math.round(1000*Math.random()));
 
-    tItm[i].addEventListener('click',(e)=>{
-      if(e.target.dataset.nav === 'thumbs'){
-        nav = e.target.dataset.nav;
-        index = i;
-        action();
-      };
-    });
-  };
 
-// fullscreen
-  let full,fullscreen;
-  fullscreen = gallery.querySelector('.fullscreen');
-  let cloneCounter = counter[0].cloneNode(true);
-  fullscreen.appendChild(cloneCounter);
-  let cloneViewer = viewer[0].cloneNode(true);
-  fullscreen.prepend(cloneViewer);
-
-  full = gallery.getElementsByClassName('full');
-  for(let item of full){
-    item.addEventListener('click',()=>{
-      fullscreen.classList.toggle('on');
-    });
-  };
-
-  prev = gallery.getElementsByClassName('prev');
-  next = gallery.getElementsByClassName('next');
-  
-  for(let item of prev){
-    item.dataset.nav = 'prev';
-    item.addEventListener('click',(e)=>{
-      if(e.target.dataset.nav === 'prev'){
-        nav = e.target.dataset.nav;
-        if(index > 0 && index < vItm.length){
-          index--;
-          action();
+      this.thumbs[i].addEventListener('click',(e)=>{
+        if(e.target.classList.contains('thumbs')){
+          this.index = i;
+          this._action();
         };
-      };
-    });
+      });
+    };
   };
 
-  for(let item of next){
-    item.dataset.nav = 'next';
-    item.addEventListener('click',(e)=>{
-      if(e.target.dataset.nav === 'next'){
-        nav = e.target.dataset.nav;
-        if(index >= 0 && index < vItm.length - 1){
-          index++;
-          action();
-        };
-      };
-    });
+  _prev(){
+    this.index--;
+    if(this.index < 0){
+      this.index = this.images.length - 1;
+      this._action();
+    }
+    else this._action();
   };
 
-window.addEventListener('keyup',(e)=>checkKey(e));
-
-function checkKey(e){
-  if(e.keyCode == '37'){
-    if(index > 0 && index < vItm.length){
-      nav = 'prev';
-      index--;
-      action();
-    };
-  }
-  else if (e.keyCode == '39'){
-    if(index >= 0 && index < vItm.length - 1){
-      nav = 'next';
-      index++;
-      action();
-    };
-  }
-  else if(e.keyCode == '27'){
-    fullscreen.classList.remove('on');
-  }
-}
-
-// action
-  function action(){
-    // counter
-    for(let item of counter){
-      item.innerHTML = (index + 1)+' / '+vItm.length;
-    };
-    // nav
-    for(let item of prev){
-      index === 0 ? item.classList.remove('on') : item.classList.add('on');
-    };
-    for(let item of next){
-      index === vItm.length - 1 ? item.classList.remove('on') : item.classList.add('on');
-    };
-
-    if(vItm[index].dataset.state === 'ready'){
-      for(let item of viewer){
-        vItm = item.getElementsByClassName('vItm');
-        let img = vItm[index].querySelector('img');
-        img.src = img.dataset.src;
-        img.addEventListener('load',()=>loadImg());
-        function loadImg(){
-          vItm = item.getElementsByClassName('vItm');
-          let img = vItm[index].querySelector('img');
-          let w = img.naturalWidth;
-          let h = img.naturalHeight;
-          if(w > 0 && h > 0){
-            vItm[index].dataset.state = 'loaded';
-            img.style.transitionProperty = 'opacity';
-          };
-        };
-      };
-     };
-
-    if(vItm[index].dataset.state === 'error') vItm[index].insertAdjacentHTML('afterbegin',error);
-    function selector(){
-      for(let item of viewer){
-        vItm = item.getElementsByClassName('vItm');
-        vItm[index].dataset.current = 1;
-        if(index !== pIndex) vItm[pIndex].dataset.current = 0;
-      };
-      tItm[index].insertAdjacentHTML('beforeend',frame);
-      if(index !== pIndex){
-        tItm[pIndex].querySelector('.frame').remove();
-        pIndex = index;
-      };
-    };
-
-    if(nav === 'prev' || nav === 'next' || nav === 'thumbs') selector();
+  _next(){
+    this.index++;
+    if(this.index > this.images.length - 1){
+      this.index = 0;
+      this._action();
+    }
+    else this._action();
   };
-  action()
+
+  _fullWindowOpen(){
+    this.element.classList.add('fullWindow');
+  };
+
+  _fullWindowClose(){
+    this.element.classList.remove('fullWindow');
+  };
+
+  _download(){
+    let url = this.images[this.index].querySelector('img').dataset.src;
+    let link = document.createElement('a');
+    document.documentElement.append(link);
+
+    let d = new Date();
+    let time = d.getTime();
+
+    fetch(url)
+      .then(res => res.blob())
+      .then(blob =>{
+        let objectURL = URL.createObjectURL(blob);
+        link.setAttribute('download','image_'+time);
+        link.href = objectURL;
+        link.click();})
+      .then(()=>link.remove());
+  };
+
+  _keyboard(e){
+    if(e.keyCode == '37') this._prev()
+    else if(e.keyCode == '39') this._next()
+    else if(e.keyCode == '27') this._fullWindowClose()
+  };
+
+  _counter(){
+    this.counter.innerHTML = (this.index + 1)+' / '+this.images.length;
+  };
+
+  _action(){
+    this._counter();
+    for(let i = 0; i < this.images.length; i++){
+      this.images[i].dataset.current = 0;
+      this.thumbs[i].dataset.current = 0;
+    };
+    this.images[this.index].dataset.current = 1;
+    this.thumbs[this.index].dataset.current = 1;
+
+    let img = this.images[this.index].querySelector('img');
+    img.src = img.dataset.src;
+  };
+
 };
+new ImageViewer('newItem');
