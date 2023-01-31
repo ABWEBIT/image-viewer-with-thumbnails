@@ -3,9 +3,9 @@ class ImageViewer{
   constructor(id){
     this.element = document.getElementById(id);
     this.imagesContainer = this.element.querySelector('.imagesContainer');
-    this.images = null;
+    this.images = this.imagesContainer.querySelectorAll('.images');
     this.thumbsView = this.element.querySelector('.thumbsView');
-    this.thumbs = null;
+    this.thumbs = this.thumbsView.querySelectorAll('.thumbs');
     this.counter = this.element.querySelector('.counter');
     this.navigation = this.element.querySelector('.navigation');
     this.prev = this.navigation.querySelector('.prev');
@@ -29,11 +29,9 @@ class ImageViewer{
   };
   
   _init(){
-    this.images = this.imagesContainer.querySelectorAll('.images');
     if(this.images.length < 1)
       throw new Error('изображения отсутствуют');
 
-    this.thumbs = this.thumbsView.querySelectorAll('.thumbs');
     if(this.thumbs.length < 1)
       throw new Error('миниатюры отсутствуют');
 
